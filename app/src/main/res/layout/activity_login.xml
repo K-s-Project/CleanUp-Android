@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Login">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:src="@drawable/minlogo">
+        </ImageView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="120dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="64dp"
+            android:fontFamily="@font/roboto"
+            android:textColor="#AD0009"
+            android:text="CLEAN UP">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16dp"
+            android:fontFamily="@font/robotoslab"
+            android:textColor="#F0B600"
+            android:text="Cleaning Management System">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/robotoslab"
+            android:textStyle="bold"
+            android:text="Email">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/loginemail"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:inputType="textEmailAddress"
+            android:fontFamily="@font/robotoslab"
+            android:hint="Email">
+
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/robotoslab"
+            android:textStyle="bold"
+            android:text="Password">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/loginpassword"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:inputType="textPassword"
+            android:fontFamily="@font/robotoslab"
+            android:hint="Password">
+
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOGIN"
+            android:background="#AD0009"
+            android:textColor="#ffffff">
+
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/robotoslab"
+            android:text="Don't have an account?"/>
+        <TextView
+            android:id="@+id/gotoregister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/robotoslab"
+            android:textColor="#F0B600"
+            android:text="Register"/>
+
+    </LinearLayout>
+
+</LinearLayout>

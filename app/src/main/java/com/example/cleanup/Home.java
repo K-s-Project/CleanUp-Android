@@ -1,12 +1,14 @@
 package com.example.cleanup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,8 +17,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.cleanup.model.RoomModel;
+import com.example.cleanup.model.UserModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 
 public class Home extends AppCompatActivity {
@@ -67,6 +79,38 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // Get Users Doc Refererence
+        DocumentReference usersDoc = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid());
+        usersDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot userSnapshot = task.getResult();
+                    UserModel user = userSnapshot.toObject(UserModel.class);
+                    ArrayList<String> rooms = user.rooms;
+
+                    // Loloop ko to ngayon para makuha ko yung lahat ng rooms na ilalagay ko sa todo ko
+                    rooms.forEach(roomid -> {
+                        DocumentReference roomDocs = FirebaseFirestore.getInstance().collection("rooms").document(roomid);
+
+                        roomDocs.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    DocumentSnapshot roomSnapshot = task.getResult();
+                                    RoomModel room = roomSnapshot.toObject(RoomModel.class);
+                                    Toast.makeText(Home.this, ""+room.building_name, Toast.LENGTH_SHORT).show();
+                                    // Dito mo na i aadd si recycler view yung mga list na nasa recycler view
+                                    // Sample: List.add(room)
+                                }
+                            }
+                        });
+                    });
+                }
+            }
+        });
+
         // Obtain a handle for the RecyclerView
         recyclerView = findViewById(R.id.rvProgram);
         // You may use this setting to improve performance if you know that changes

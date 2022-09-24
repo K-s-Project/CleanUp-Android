@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         if(user == null){
             startActivity(new Intent(MainActivity.this, Login.class));
             overridePendingTransition(0,0);
+        }else{
+            startActivity(new Intent(MainActivity.this, Home.class));
+            overridePendingTransition(0,0);
         }
     }
 }

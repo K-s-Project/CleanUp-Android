@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(),Profile.class));
                         overridePendingTransition(0,0);
+
                         return true;
                 }
                 return false;

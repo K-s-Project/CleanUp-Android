@@ -11,7 +11,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -21,11 +23,13 @@ import java.util.ResourceBundle;
 
 import static com.example.cleanup.CalendarUtils.daysInMonthArray;
 import static com.example.cleanup.CalendarUtils.monthYearFromDate;
+import static com.example.cleanup.CalendarUtils.selectedDate;
 
-public class Events extends AppCompatActivity {
+public class Events extends AppCompatActivity{
     BottomNavigationView bnv;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
+    private ListView eventListView;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class Events extends AppCompatActivity {
     {
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
+        eventListView = findViewById(R.id.eventListView);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -75,7 +80,7 @@ public class Events extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
-
+        setEventAdapter();
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousMonthAction(View view)
@@ -98,9 +103,16 @@ public class Events extends AppCompatActivity {
         {
             CalendarUtils.selectedDate = date;
             setMonthView();
+            //Toast.makeText(this, "" + date, Toast.LENGTH_SHORT).show();
         }
-    }
 
+    }
+    private void setEventAdapter()
+    {
+        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        eventListView.setAdapter(eventAdapter);
+    }
     public void weeklyAction(View view)
     {
         startActivity(new Intent(this, WeekViewActivity.class));
@@ -113,4 +125,5 @@ public class Events extends AppCompatActivity {
 
         return;
     }
+
 }

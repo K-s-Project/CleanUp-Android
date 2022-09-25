@@ -169,7 +169,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/calendarRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="300dp"/>
+
+            <ListView
+                android:id="@+id/eventListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

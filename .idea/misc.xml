@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/63995/AndroidStudioProjects/CleanUp/CleanUp-Android/app/src/main/res/layout/activity_event_edit.xml" value="0.2282051282051282" />
+        <entry key="..\:/Users/63995/AndroidStudioProjects/CleanUp/CleanUp-Android/app/src/main/res/layout/activity_events.xml" value="0.2282051282051282" />
+        <entry key="..\:/Users/63995/AndroidStudioProjects/CleanUp/CleanUp-Android/app/src/main/res/layout/activity_week_view.xml" value="0.2282051282051282" />
+        <entry key="..\:/Users/63995/AndroidStudioProjects/CleanUp/CleanUp-Android/app/src/main/res/layout/single_item.xml" value="0.2282051282051282" />
         <entry key="..\:/Users/63995/AndroidStudioProjects/CleanUp/app/src/main/res/drawable/calendar_tic.xml" value="0.23" />
         <entry key="..\:/Users/63995/AndroidStudioProjects/CleanUp/app/src/main/res/drawable/circle.xml" value="0.1705" />
         <entry key="..\:/Users/63995/AndroidStudioProjects/CleanUp/app/src/main/res/drawable/event_ic.xml" value="0.23" />

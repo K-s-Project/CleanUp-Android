@@ -1,6 +1,7 @@
 package com.example.cleanup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,11 +25,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Home extends AppCompatActivity {
@@ -40,76 +46,15 @@ public class Home extends AppCompatActivity {
     RecyclerView.Adapter programAdapter;
     RecyclerView.LayoutManager layoutManager;
     // Next, prepare your data set. Create two string arrays for program name and program description respectively.
-    String[] programNameList1 = {"C", "C++", "Java", "Android", "HTML5", "CSS3", "JavaScript", "jQuery", "Bootstrap", "PHP",
-            "MySQL", "CodeIgniter", "React", "NodeJS", "AngularJS", "PostgreSQL", "Python", "C#", "Wordpress", "GitHub"};
-    String[] programNameList2 = {"C", "C++", "Java", "Android", "HTML5", "CSS3", "JavaScript", "jQuery", "Bootstrap", "PHP",
-            "MySQL", "CodeIgniter", "React", "NodeJS", "AngularJS", "PostgreSQL", "Python", "C#", "Wordpress", "GitHub"};
-    String[] programNameList3 = {"C", "C++", "Java", "Android", "HTML5", "CSS3", "JavaScript", "jQuery", "Bootstrap", "PHP",
-            "MySQL", "CodeIgniter", "React", "NodeJS", "AngularJS", "PostgreSQL", "Python", "C#", "Wordpress", "GitHub"};
-//    String[] programDescriptionList = {"C Description", "C++ Description", "Java Description",
-//            "Android Description", "HTML5 Description",
-//            "CSS3 Description", "JavaScript Description", "jQuery Description",
-//            "Bootstrap Description", "PHP Description", "MySQL Description",
-//            "CodeIgniter Description", "React Description", "NodeJS Description",
-//            "AngularJS Description", "PostgreSQL Description", "Python Description",
-//            "C# Description", "Wordpress Description", "GitHub Description"};
+   ArrayList<RoomModel> adapterRooms = new ArrayList<RoomModel>();
 
-    int[] programImages1 = {R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24};
-    int[] programImages2 = {R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24};
-    int[] programImages3 = {R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24,
-            R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24, R.drawable.ic_baseline_arrow_back_24};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         // Get Users Doc Refererence
         DocumentReference usersDoc = FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid());
-        usersDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot userSnapshot = task.getResult();
-                    UserModel user = userSnapshot.toObject(UserModel.class);
-                    ArrayList<String> rooms = user.rooms;
 
-                    // Loloop ko to ngayon para makuha ko yung lahat ng rooms na ilalagay ko sa todo ko
-                    rooms.forEach(roomid -> {
-                        DocumentReference roomDocs = FirebaseFirestore.getInstance().collection("rooms").document(roomid);
-
-                        roomDocs.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if(task.isSuccessful()){
-                                    DocumentSnapshot roomSnapshot = task.getResult();
-                                    RoomModel room = roomSnapshot.toObject(RoomModel.class);
-                                    Toast.makeText(Home.this, ""+room.building_name, Toast.LENGTH_SHORT).show();
-                                    // Dito mo na i aadd si recycler view yung mga list na nasa recycler view
-                                    // Sample: List.add(room)
-                                }
-                            }
-                        });
-                    });
-                }
-            }
-        });
 
         // Obtain a handle for the RecyclerView
         recyclerView = findViewById(R.id.rvProgram);
@@ -120,9 +65,29 @@ public class Home extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // Create an instance of ProgramAdapter. Pass context and all the array elements to the constructor
-        programAdapter = new ProgramAdapter(this, programNameList1,programNameList2,programNameList3, programImages1,programImages2,programImages3);
+        programAdapter = new ProgramAdapter(Home.this, adapterRooms);
         // Finally, attach the adapter with the RecyclerView
         recyclerView.setAdapter(programAdapter);
+
+        String uid = FirebaseAuth.getInstance().getUid();
+        CollectionReference roomDocs = FirebaseFirestore.getInstance().collection("rooms");
+
+        roomDocs.whereArrayContainsAny("assignedStaff", Collections.singletonList("" + uid)).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for (DocumentChange dc: value.getDocumentChanges()){
+                    RoomModel room = dc.getDocument().toObject(RoomModel.class);
+                    adapterRooms.add(room);
+                }
+
+                programAdapter.notifyDataSetChanged();
+            }
+
+
+        });
+
+
+
         bnv = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
         seemore = (Button) findViewById(R.id.seemore);

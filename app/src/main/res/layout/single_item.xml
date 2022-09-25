@@ -6,19 +6,19 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="204dp"
+        android:layout_margin="8dp"
         android:background="@drawable/shadow"
         android:elevation="10dp"
-        android:orientation="vertical"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/roomnumber"
@@ -26,60 +26,69 @@
                 android:layout_height="wrap_content"
                 android:text="Apple" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
+
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
 
-                android:src="@drawable/ic_baseline_timer_24"/>
+                android:src="@drawable/ic_baseline_timer_24" />
+
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="sample time"/>
+                android:layout_marginLeft="10dp"
+                android:text="sample time" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
+
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_location_on_24"/>
+                android:src="@drawable/ic_baseline_location_on_24" />
+
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="sample time"/>
+                android:layout_marginLeft="10dp"
+                android:text="sample time" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
+
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_sticky_note_2_24"/>
+                android:src="@drawable/ic_baseline_sticky_note_2_24" />
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
-                android:text="sample time"/>
+                android:layout_marginLeft="10dp"
+                android:text="sample time" />
         </LinearLayout>
 
     </LinearLayout>

@@ -50,6 +50,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/circle"/>
             <TextView
+                android:id="@+id/headfullname"
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,13 +63,14 @@
             </TextView>
 
             <TextView
+                android:id="@+id/heademail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:fontFamily="@font/robotoslab"
+                android:gravity="center"
+                android:text="Email"
                 android:textColor="#ffffff"
-                android:textSize="12dp"
-                android:text="Email">
+                android:textSize="12dp">
 
             </TextView>
         </LinearLayout>
@@ -96,6 +98,7 @@
                 </TextView>
 
                 <EditText
+                    android:id="@+id/fullname"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:fontFamily="@font/robotoslab"
@@ -105,7 +108,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -117,13 +120,15 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/robotoslab"
                     android:textStyle="bold"
-                    android:text="Password">
+                    android:text="Password"/>
 
-                </TextView>
+
 
                 <EditText
+                    android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:inputType="textPassword"
                     android:fontFamily="@font/robotoslab"
                     android:hint="Password">
 
@@ -131,7 +136,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -148,10 +153,13 @@
                 </TextView>
 
                 <EditText
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:editable="false"
                     android:fontFamily="@font/robotoslab"
-                    android:hint="Email">
+                    android:hint="Email"
+                    tools:ignore="Deprecated">
 
                 </EditText>
 
@@ -189,7 +197,7 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/register"
+                    android:id="@+id/save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="SAVE"

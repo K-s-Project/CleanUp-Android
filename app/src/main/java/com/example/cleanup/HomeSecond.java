@@ -9,16 +9,40 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeSecond extends AppCompatActivity {
     BottomNavigationView bnv;
     ImageView backhome;
+
+    TextView building_number;
+    TextView building_name;
+    TextView schedule;
+    TextView notes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_second);
+        building_number = findViewById(R.id.building_number);
+        building_name = findViewById(R.id.building_name);
+        notes = findViewById(R.id.notes);
+        schedule = findViewById(R.id.schedule);
+
+
+        String room_number1 = getIntent().getStringExtra("ROOM_NUMBER");
+        String building_name1 = getIntent().getStringExtra("BUILDING_NAME");
+        String id1 = getIntent().getStringExtra("ID");
+        String notes1 = getIntent().getStringExtra("NOTES");
+        String schedule1 = getIntent().getStringExtra("SCHEDULE");
+
+
+        building_number.setText(room_number1);
+        building_name.setText(building_name1);
+        notes.setText(notes1);
+        schedule.setText(schedule1);
+
         bnv = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         backhome = (ImageView) findViewById(R.id.backhome);
 

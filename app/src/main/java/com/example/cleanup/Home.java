@@ -2,32 +2,21 @@ package com.example.cleanup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
+import com.example.cleanup.model.RoomInterface;
 import com.example.cleanup.model.RoomModel;
-import com.example.cleanup.model.UserModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -37,9 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements RoomInterface {
     BottomNavigationView bnv;
-    Button seemore;
     FirebaseAuth mAuth;
 
     RecyclerView recyclerView;
@@ -65,7 +53,7 @@ public class Home extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         // Create an instance of ProgramAdapter. Pass context and all the array elements to the constructor
-        programAdapter = new ProgramAdapter(Home.this, adapterRooms);
+        programAdapter = new ProgramAdapter(Home.this, adapterRooms, this);
         // Finally, attach the adapter with the RecyclerView
         recyclerView.setAdapter(programAdapter);
 
@@ -90,14 +78,7 @@ public class Home extends AppCompatActivity {
 
         bnv = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
-        seemore = (Button) findViewById(R.id.seemore);
-        seemore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),HomeSecond.class));
-                overridePendingTransition(0,0);
-            }
-        });
+
 
         bnv.setSelectedItemId(R.id.home);
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -132,5 +113,20 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
 
         return;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+Intent intent = new Intent(Home.this,HomeSecond.class);
+
+        intent.putExtra("ROOM_NUMBER",adapterRooms.get(position).room_number);
+        intent.putExtra("BUILDING_NAME",adapterRooms.get(position).building_name);
+        intent.putExtra("ID",adapterRooms.get(position).id);
+        intent.putExtra("NOTES",adapterRooms.get(position).notes);
+        intent.putExtra("SCHEDULE",adapterRooms.get(position).schedule);
+
+
+        startActivity(intent);
+
     }
 }

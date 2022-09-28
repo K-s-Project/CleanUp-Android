@@ -16,12 +16,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.StorageTask;
 
 public class Login extends AppCompatActivity {
     Button login;
     TextView register;
     EditText loginemail,loginpassword;
     FirebaseAuth mAuth;
+    FirebaseAuth task;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +54,8 @@ public class Login extends AppCompatActivity {
     }
     public void onBackPressed() {
 
-        Intent intent = new Intent(Login.this,
-                MainActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        overridePendingTransition(0,0);
 
         return;
     }
@@ -71,8 +73,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(Login.this, "Successfully Login!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),Home.class));
+                            startActivity(new Intent(getApplicationContext(),LoginProgressBar.class));
                             overridePendingTransition(0,0);
                         }else{
                             Toast.makeText(Login.this, "Login Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

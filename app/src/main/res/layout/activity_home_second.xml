@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/robotoslab"
-                    android:text="Events name "/>
+                    android:text="Room No. "/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -240,16 +240,19 @@
                 android:background="@drawable/shadow"
                 android:orientation="vertical">
                 <ImageView
+                    android:id="@+id/imageview"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
-                    android:src="@drawable/man"/>
+                    android:src="@drawable/ic_baseline_linked_camera_24"/>
+
                 <TextView
+                    android:id="@+id/uploadimg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:fontFamily="@font/robotoslab"
-                    android:textColor="@color/reddish"
-                    android:text="@string/HEADER_DELTA"/>
+                    android:gravity="center"
+                    android:text="@string/HEADER_DELTA"
+                    android:textColor="@color/reddish" />
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -257,6 +260,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <Button
+                    android:id="@+id/doneupload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="DONE"

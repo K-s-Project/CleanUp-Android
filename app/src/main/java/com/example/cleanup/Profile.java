@@ -7,12 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ public class Profile extends AppCompatActivity {
     Button update;
     FirebaseAuth mAuth;
     String userid;
+    ImageView logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,7 @@ public class Profile extends AppCompatActivity {
         hfullname = findViewById(R.id.headfullname);
         hemail = findViewById(R.id.heademail);
         update = findViewById(R.id.save);
+        logout = findViewById(R.id.logout);
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         bnv = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
@@ -80,6 +84,28 @@ public class Profile extends AppCompatActivity {
                         return true;
                 }
                 return false;
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog dialog = new AlertDialog.Builder(Profile.this)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Yes", null)
+                        .setNegativeButton("Cancel", null)
+                        .show();
+
+                Button positivebutton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positivebutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mAuth.signOut();
+                        startActivity(new Intent(getApplicationContext(),LogoutProgressBar.class));
+                        overridePendingTransition(0,0);
+                    }
+                });
             }
         });
             update.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,7 @@
 package com.example.cleanup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -11,14 +12,28 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cleanup.model.EventModel;
+import com.example.cleanup.model.RoomModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import static com.example.cleanup.CalendarUtils.daysInMonthArray;
@@ -30,6 +45,8 @@ public class Events extends AppCompatActivity{
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private ListView eventListView;
+    FirebaseFirestore eventdocs;
+    String id,schedule;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,14 +121,42 @@ public class Events extends AppCompatActivity{
             CalendarUtils.selectedDate = date;
             setMonthView();
             //Toast.makeText(this, "" + date, Toast.LENGTH_SHORT).show();
+            String dates = date.toString();
+            ArrayList<String> as = new ArrayList<>();
+            eventdocs = FirebaseFirestore.getInstance();
+            eventdocs.collection("events")
+                    .whereEqualTo("schedule", dates)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                as.clear();
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    EventModel event = document.toObject(EventModel.class);
+                                    as.add(" EVENT NAME: " + event.getEvent_name());
+                                }
+                                try{
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item,as);
+                                    adapter.notifyDataSetChanged();
+                                    eventListView.setAdapter(adapter);
+                                }catch (Exception e){
+                                    Toast.makeText(Events.this, e.getMessage().toString() + date, Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(Events.this, "Error!" + date, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
         }
 
     }
     private void setEventAdapter()
     {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
-        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
-        eventListView.setAdapter(eventAdapter);
+        //ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtils.selectedDate);
+        //EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        //eventListView.setAdapter(eventAdapter);
     }
     public void weeklyAction(View view)
     {

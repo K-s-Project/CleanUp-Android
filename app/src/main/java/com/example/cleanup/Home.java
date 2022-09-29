@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -60,12 +61,15 @@ public class Home extends AppCompatActivity implements RoomInterface {
         String uid = FirebaseAuth.getInstance().getUid();
         CollectionReference roomDocs = FirebaseFirestore.getInstance().collection("rooms");
 
-        roomDocs.whereArrayContainsAny("assignedStaff", Collections.singletonList("" + uid)).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        roomDocs.whereEqualTo("markAsDeleted",false).whereArrayContainsAny("assignedStaff", Collections.singletonList("" + uid)).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                for (DocumentChange dc: value.getDocumentChanges()){
-                    RoomModel room = dc.getDocument().toObject(RoomModel.class);
+                adapterRooms.clear();
+
+                for (DocumentSnapshot dc: value.getDocuments()){
+                    RoomModel room = dc.toObject(RoomModel.class);
                     adapterRooms.add(room);
+
                 }
 
                 programAdapter.notifyDataSetChanged();

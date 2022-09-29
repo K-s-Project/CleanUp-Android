@@ -124,7 +124,7 @@ public class Events extends AppCompatActivity{
             String dates = date.toString();
             ArrayList<String> as = new ArrayList<>();
             eventdocs = FirebaseFirestore.getInstance();
-            eventdocs.collection("events")
+            eventdocs.collection("events").whereEqualTo("markAsDeleted",false)
                     .whereEqualTo("schedule", dates)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

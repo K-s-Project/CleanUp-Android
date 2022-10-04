@@ -94,7 +94,7 @@ public class HomeSecond extends AppCompatActivity {
         doneupload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mStorageRef = FirebaseStorage.getInstance().getReference("rooms/"+room_number1+"/"+userid+".png");
+                mStorageRef = FirebaseStorage.getInstance().getReference("rooms/"+room_number1+"/"+userid);
                 if(mUploadTask != null && mUploadTask.isInProgress()){
                     Toast.makeText(HomeSecond.this, "in progress!", Toast.LENGTH_SHORT).show();
                 }else{
@@ -177,7 +177,7 @@ public class HomeSecond extends AppCompatActivity {
         if (requestCode == CAM2_REQUEST) {
             image = (Bitmap) data.getExtras().get("data");
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//            image.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+            image.compress(Bitmap.CompressFormat.PNG, 100, bytes);
             bb = bytes.toByteArray();
             imageview.setImageBitmap(image);
 
